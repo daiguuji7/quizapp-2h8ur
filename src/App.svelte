@@ -1,13 +1,9 @@
 <script>import "./app.css";
 import AnswerButton from "./AnswerButton.svelte";
+import {getQuizdata} from "./quizdataFactory";
 let currentScore = 0;
 let renzokuSeikai = 0;
-
-let quizdata = {
-    mondai: "鮪",
-    seikai: "まぐろ",
-    taku:["ひらめ", "かれい", "まぐろ", "ぶり", "くじら"]
-};
+let quizdata = getQuizdata();
 
 function answerButtonClicked(isCorrect){
     if(isCorrect){
