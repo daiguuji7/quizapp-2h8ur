@@ -1,4 +1,5 @@
-<script>import "./app.css";
+<script>
+import "./app.css";
 import AnswerButton from "./AnswerButton.svelte";
 import {getQuizdata} from "./quizdataFactory";
 let currentScore = 0;
@@ -13,6 +14,7 @@ function answerButtonClicked(isCorrect){
     else{
         renzokuSeikai = 0;
     }
+    quizdata = getQuizdata(); // 問題を差し替える
 }
 
 const correctAnswerButtonClicked = () => answerButtonClicked(true);

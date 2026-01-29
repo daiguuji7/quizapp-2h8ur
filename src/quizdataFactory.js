@@ -11,10 +11,9 @@ const QAlist = [
 ]
 
 export function getQuizdata(){
-    console.log(randomArray(100,5));
-
-    const takuID = [0,1,2,3,4];
-    const seikaiID = 0;
+    const numberOfTaku = 5;
+    const takuID = randomArray(QAlist.length, numberOfTaku);
+    const seikaiID = takuID[randomRange(numberOfTaku)];
     const taku = takuID.map(id => QAlist[id].A);
     return {
         mondai: QAlist[seikaiID].Q,
