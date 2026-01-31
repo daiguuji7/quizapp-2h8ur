@@ -1,15 +1,35 @@
-<script>
-import "./app.css";
+<script>import "./app.css";
+import { onMount } from "svelte";
 import AnswerButton from "./AnswerButton.svelte";
 import {getQuizdata} from "./quizdataFactory";
 import TitlePage from "./TitlePage.svelte";
-let showTitle = true;
+
+const [InitialState, TitleState, QuestionState, AnswerState, GameoverState] = [0, 1, 2, 3, 4];
+let state = InitialState;
 
 let currentScore = 0;
 let renzokuSeikai = 0;
-let quizdata = getQuizdata();
+let quizdata;
+
+onMount(changeToTitle);
+
+function changeToTitle(){
+    state = TitleState;
+}
+function changeToQuestion(){
+    quizdata = getQuizdata();
+    state = QuestionState;
+}
+function changeToAnswer(){
+    state = AnswerState;
+    setTimeout(changeToQuestion, 1000);
+}
+function changeToGameover(){
+    state = GameoverState;
+}
 
 function answerButtonClicked(isCorrect){
+    if(state !== QuestionState) return;
     if(isCorrect){
     renzokuSeikai += 1;
     currentScore += renzokuSeikai;
@@ -17,16 +37,14 @@ function answerButtonClicked(isCorrect){
     else{
         renzokuSeikai = 0;
     }
-    quizdata = getQuizdata(); // 問題を差し替える
+    changeToAnswer();
 }
 
-const correctAnswerButtonClicked = () => answerButtonClicked(true);
+const correctAnswerButtonClicked = () => answerButtonClicked(true);</script>
 
-</script>
-
-{#if showTitle}
-    <TitlePage on:click={()=>showTitle=false}></TitlePage>
-{:else}
+{#if state = TitleState}
+    <TitlePage on:click="{changeToQuestion}"></TitlePage>
+{:else if state === QuestionState || state === AnswerState}
     <main class="flex flex-col h-svh">
         <!-- メニューバー -->
         <div class="bg-red-200 flex justify-around text-xl font-bold p-3">
@@ -40,7 +58,10 @@ const correctAnswerButtonClicked = () => answerButtonClicked(true);
         <!-- 選択肢 -->
         <div class="bg-blue-200 flex flex-col justify-around flex-grow items-center">
             {#each quizdata.taku as t}
-                <AnswerButton on:click={() => answerButtonClicked(quizdata.seikai===t)}>{t}</AnswerButton>
+                <AnswerButton
+                    isGrayout={state===AnswerState && quizdata.seikai !=t}
+                    on:click={() => answerButtonClicked(quizdata.seikai===t)}>{t}
+                </AnswerButton>
             {/each}
         </div>
     </main>

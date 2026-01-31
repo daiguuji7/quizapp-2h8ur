@@ -1,3 +1,9 @@
-<button on:click class="bg-blue-500 text-lg font-bold text-blue-50 border-blue-800 border-2 rounded-xl py-4 w-4/5">
+<script>
+    export let isGrayout = false;
+</script>
+
+<button on:click
+    class="text-blue-100 border-blue-100 text-lg font-bold border-2 rounded-xl py-4 w-4/5"
+    class:bg-gray-500={isGrayout} class:bg-blue-500={!isGrayout}>
     <slot></slot>
 </button>

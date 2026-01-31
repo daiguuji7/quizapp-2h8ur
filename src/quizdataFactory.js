@@ -27,7 +27,7 @@ function randomRange(max) {
     return Math.floor(Math.random() * max);
 }
 
-/** 0以上max以下の整数を重複泣くlen個をランダムに選ぶ関数 */
+/** 0以上max以下の整数を重複無くlen個をランダムに選ぶ関数 */
 function randomArray(max, len){
     const array = [];
     while(array.length < len) {
