@@ -16,5 +16,6 @@
         <div class="text-xl font-bold">
             スコア：{score}
         </div>
+        <button on:click class="text-xl w-1/2 border-2 border-gray-500 rounded-xl">OK</button>
     </div>
 </dialog>
